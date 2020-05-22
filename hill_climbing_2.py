@@ -3,7 +3,7 @@ import time
 
 
 class Count:
-    def __init__(self, contar, posicoes_proibidas, custo_posicao):
+    def __init__(self, contar, posicoes_proibidas, custo_posicao, distancia_real):
         self.contar = 0
         self.posicoes_proibidas = []
         self.custo_posicao = []
