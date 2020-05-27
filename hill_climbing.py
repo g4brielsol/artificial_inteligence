@@ -1,5 +1,6 @@
 import random
 import time
+import statistics
 
 
 class Count:
@@ -125,16 +126,17 @@ def get_vizinhos(comprimento: int, largura: int, custo_posicao: list,
     # para o caminho nao ser sempre o mesmo
     melhor_custo_aleatorio = random.choice(custos_vizinhos)
 
-    print(melhor_custo_aleatorio)
+    # print(melhor_custo_aleatorio)
     return melhor_custo_aleatorio
 
 
 def main():
+
     # grava o início da execução do programa
     comeco_timer = time.time()
     # abre o arquivo com o mapa em .txt
     # o nome precisa ser labirinto.txt
-    entrada = open("labirinto.txt", "r")
+    entrada = open("labirinto5.txt", "r")
     # lê todas as linhas do arquivo
     arquivo_entrada = entrada.readlines()
     # transforma as quebras de linha \n em nada ""
@@ -149,9 +151,9 @@ def main():
     # exclui a primeira linha do arquivo .txt e mantém só o mapa
     labirinto = arquivo_entrada[1:]
     # printa o mapa lido no arquivo .txt
-    for linha in labirinto:
-        print(linha)
-    print()
+#    for linha in labirinto:
+#        print(linha)
+#    print()
     # pega a posicao inicial (#)
     posicao_inicial = get_posicao_simbolo(labirinto, "#")
     # pega a posicao final ($)
@@ -204,11 +206,14 @@ def main():
         print("Solução Encontrada")
     else:
         print("Solução não foi encontrada")
-        print("Tempo Total de Execução: {:.5f} segundos".format(tempo_total))
+        print("Tempo Total de Execução: {:.5f} segundos".format(
+            tempo_total))
 
-    print("Tamanho do Caminho Percorrido {}".format(len(caminho_percorrido) - 1))
+    print("Tamanho do Caminho Percorrido {}".format(
+        len(caminho_percorrido) - 1))
     print("Passos andados {}".format(caminho_percorrido))
     print("Tempo Total de Execução: {:.5f} segundos".format(tempo_total))
+
     for i in iteracao.custo_posicao:
         print(i)
 
