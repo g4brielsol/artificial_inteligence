@@ -1,9 +1,12 @@
 import random
-import time
-import statistics
 
 
 class Count:
+    """
+    Classe para armazenar as iterações do algoritmo, as paredes do labirinto
+    e o custo da função de otimização (f(n)) de cada posição
+    """
+
     def __init__(self, contar, posicoes_proibidas, custo_posicao, distancia_real):
         self.contar = 0
         self.posicoes_proibidas = []
@@ -53,6 +56,7 @@ def get_vizinhos(comprimento: int, largura: int, custo_posicao: list,
     Caso exista mais de uma posição adjacente com melhor custo, escolhe randomicamente entre elas
     (mistura dos algoritmos Steepest Ascent Hill Climbing com Stochastic Hill Climbing).
     """
+    # conta mais 1 iteracao
     iteracao.contar += 1
     posicoes_vizinhas = []
     # custo atual até a posicao final
@@ -113,6 +117,7 @@ def get_vizinhos(comprimento: int, largura: int, custo_posicao: list,
         # printa custo atual
         print("f(n) = {}".format(custo_atual))
         print("Nao possui vizinhos com melhor f(n) = h(n)")
+        print("Solução não encontrada!")
         # vizinho igual "" para sair do while no main()
         vizinho = ""
         return(vizinho)
@@ -132,11 +137,10 @@ def get_vizinhos(comprimento: int, largura: int, custo_posicao: list,
 
 def main():
 
-    # grava o início da execução do programa
-    comeco_timer = time.time()
+    # le o nome do mapa em .txt
+    mapa = str(input("Digite o nome do arquivo com final .txt: "))
     # abre o arquivo com o mapa em .txt
-    # o nome precisa ser labirinto.txt
-    entrada = open("labirinto5.txt", "r")
+    entrada = open(mapa, "r")
     # lê todas as linhas do arquivo
     arquivo_entrada = entrada.readlines()
     # transforma as quebras de linha \n em nada ""
@@ -150,16 +154,10 @@ def main():
     limites_do_labirinto[1] = int(limites_do_labirinto[1])
     # exclui a primeira linha do arquivo .txt e mantém só o mapa
     labirinto = arquivo_entrada[1:]
-    # printa o mapa lido no arquivo .txt
-#    for linha in labirinto:
-#        print(linha)
-#    print()
     # pega a posicao inicial (#)
     posicao_inicial = get_posicao_simbolo(labirinto, "#")
     # pega a posicao final ($)
     posicao_final = get_posicao_simbolo(labirinto, "$")
-    # printa a posicao inicial
-    print("Posicao Inicial {}\n".format(tuple(posicao_inicial)))
     # associa o comprimento e a largura do mapa para a função de verificacao de borda
     comprimento = limites_do_labirinto[0] - 1
     largura = limites_do_labirinto[1] - 1
@@ -199,23 +197,8 @@ def main():
         if vizinho[0] == "$":
             # adiciona a posicao final ao caminho
             caminho_percorrido.append(tuple(vizinho[1:]))
-    # calcula o tempo final de execução
-    tempo_total = time.time() - comeco_timer
-    # se tiver solucao
-    if vizinho != "":
-        print("Solução Encontrada")
-    else:
-        print("Solução não foi encontrada")
-        print("Tempo Total de Execução: {:.5f} segundos".format(
-            tempo_total))
 
-    print("Tamanho do Caminho Percorrido {}".format(
-        len(caminho_percorrido) - 1))
-    print("Passos andados {}".format(caminho_percorrido))
-    print("Tempo Total de Execução: {:.5f} segundos".format(tempo_total))
-
-    for i in iteracao.custo_posicao:
-        print(i)
+    print("{}".format(caminho_percorrido))
 
 
 # inicia o programa
